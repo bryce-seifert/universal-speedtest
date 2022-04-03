@@ -1,3 +1,4 @@
+import {performance} from "perf_hooks";
 import {HttpClientResponse, IncomingHttpHeaders} from "urllib";
 import {createRequest} from "./helpers/UrllibHelper";
 import {avg, convertUnits, getDistance, getQuartile, jitter, sortObject} from "./Utils";
@@ -195,7 +196,7 @@ export class Cloudflare {
         const completedTests = [];
 
         try {
-            for (const test of this.tests.download) {
+            for (const test of this.options.downloadPayload || this.tests.download) {
                 const singleTest = [];
                 for (let i = 0; i < test[1]; i++) {
                     const start = performance.now();
@@ -240,7 +241,7 @@ export class Cloudflare {
         const completedTests = [];
 
         try {
-            for (const test of this.tests.upload) {
+            for (const test of this.options.uploadPayload || this.tests.upload) {
                 const singleTest = [];
                 for (let i = 0; i < test[1]; i++) {
                     await this.doUpload(test[0]).then((result) => {
@@ -278,6 +279,10 @@ export interface CloudflareOptions {
     downloadUnit?: SpeedUnits;
     /** The resulting unit of upload speed. */
     uploadUnit?: SpeedUnits;
+    /** Payload used by Cloudflare test (download). */
+    downloadPayload?: number[][]
+    /** Payload used by Cloudflare test (upload). */
+    uploadPayload?: number[][]
 }
 
 export interface CloudflareResult {

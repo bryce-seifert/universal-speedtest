@@ -1,12 +1,11 @@
-import {performance} from "perf_hooks";
+import { performance } from "perf_hooks";
 import * as path from "path";
-import {Worker} from "worker_threads";
-import {IncomingHttpHeaders, RequestOptions} from "urllib";
-import {createRequest, parseXML} from "./helpers/UrllibHelper";
-import {convertUnits, getDistance, jitter, sortObject, sum} from "./Utils";
-import {HTTPUploaderData} from "./helpers/HTTPUploaderData";
-import {SpeedUnits} from "./index";
-
+import { Worker } from "worker_threads";
+import { IncomingHttpHeaders, RequestOptions } from "urllib";
+import { createRequest, parseXML } from "./helpers/UrllibHelper";
+import { convertUnits, getDistance, jitter, sortObject, sum } from "./Utils";
+import { HTTPUploaderData } from "./helpers/HTTPUploaderData";
+import { SpeedUnits } from "./index";
 
 export class Speedtest {
     private readonly options: SpeedtestOptions;
@@ -15,7 +14,7 @@ export class Speedtest {
     private testConfig;
     private clientLat: number;
     private clientLon: number;
-    private readonly uploadSizes = [32768, 65536, 131072, 262144, 524288, 1048576, 7340032];
+    private readonly uploadSizes = [ 32768, 65536, 131072, 262144, 524288, 1048576, 7340032 ];
     private servers = {};
     private fastestServer;
 
@@ -108,8 +107,8 @@ export class Speedtest {
 
                     const sizes = {
                         "upload": this.uploadSizes.slice(uploadRatio - 1, this.uploadSizes.length),
-                        "download": [350, 500, 750, 1000, 1500, 2000, 2500,
-                            3000, 3500, 4000]
+                        "download": [ 350, 500, 750, 1000, 1500, 2000, 2500,
+                            3000, 3500, 4000 ]
                     };
 
                     const uploadSizeCount = sizes["upload"].length;
@@ -176,7 +175,7 @@ export class Speedtest {
                                 const distance = getDistance(this.clientLat, this.clientLon, Number(server.$.lat), Number(server.$.lon));
 
                                 server.$.distance = distance;
-                                this.servers[distance] = [server.$];
+                                this.servers[distance] = [ server.$ ];
                             });
                         } catch (e) {
                             throw new Error("Error getting server list");
@@ -264,11 +263,11 @@ export class Speedtest {
             const requestCount = urls.length;
             const requests = [];
             urls.forEach((url, i) => {
-                requests.push([url, this.options.secure, i.toString(), (this.options.wait) ? this.options.timeout : this.testConfig.length.download]);
+                requests.push([ url, this.options.secure, i.toString(), (this.options.wait) ? this.options.timeout : this.testConfig.length.download ]);
             });
 
             const maxThreads = this.testConfig.threads.download;
-            const inFlight = {"threads": 0};
+            const inFlight = { "threads": 0 };
             const finished = [];
             const start = performance.now();
 
@@ -340,11 +339,11 @@ export class Speedtest {
                 const data = new HTTPUploaderData(size);
                 data.preAllocate();
 
-                requests.push([this.fastestServer.url, headers, this.options.secure, data.read(size), i.toString(), (this.options.wait) ? this.options.timeout : this.testConfig.length.upload, data.total]);
+                requests.push([ this.fastestServer.url, headers, this.options.secure, data.read(size), i.toString(), (this.options.wait) ? this.options.timeout : this.testConfig.length.upload, data.total ]);
             });
 
             const maxThreads = this.testConfig.threads.upload;
-            const inFlight = {"threads": 0};
+            const inFlight = { "threads": 0 };
             const finished = [];
             const start = performance.now();
 

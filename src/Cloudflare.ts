@@ -247,7 +247,7 @@ export class Cloudflare {
                 const singleTest = [];
                 for (let i = 0; i < test[1]; i++) {
                     await this.doUpload(test[0]).then((result) => {
-                        const duration = parseFloat(<string>result.res.headers["server-timing"].slice(22));
+                        const duration = parseFloat(<string>result.res.headers["server-timing"][0].slice(22));
                         singleTest.push((test[0] * 8) / (duration / 1000) / 1e6);
                     });
                 }

@@ -1,9 +1,6 @@
 name: CD - Development Build
 
-on:
-  push:
-    branches:
-      - development
+on: workflow_dispatch
 
 jobs:
   production-build:

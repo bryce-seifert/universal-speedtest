@@ -209,7 +209,7 @@ export class Cloudflare {
                     try {
                         const { headers } = await this.doUpload(test[0]);
 
-                        const duration = parseFloat(<string>headers["server-timing"].slice(22));
+                        const duration = parseFloat(<string>headers["server-timing"][0].slice(22));
                         singleTest.push((test[0] * 8) / (duration / 1000) / 1e6);
                     } catch {
                         // do nothing

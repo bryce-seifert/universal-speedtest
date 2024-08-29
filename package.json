@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "ts-mocha tests/**/*.test.ts",
+    "prepare": "npm run build",
     "build": "tsc",
     "coverage": "nyc npm test",
     "lint": "eslint . --ext .ts",

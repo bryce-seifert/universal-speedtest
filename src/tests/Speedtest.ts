@@ -230,7 +230,7 @@ export class Speedtest {
                 while (inFlight.threads >= maxThreads)
                     await this.delay(0.001);
 
-                const worker = new Worker(__dirname + "/thread_workers/download_worker.js", {
+                const worker = new Worker( "./thread_workers/download_worker.js", {
                     workerData: {
                         path: "./download_worker.ts",
                         request,
@@ -313,7 +313,7 @@ export class Speedtest {
                 while (inFlight.threads >= maxThreads)
                     await this.delay(0.001);
 
-                const worker = new Worker(__dirname + "/thread_workers/upload_worker.js", {
+                const worker = new Worker("./thread_workers/upload_worker.js", {
                     workerData: {
                         path: "./upload_worker.ts",
                         request,
